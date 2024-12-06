@@ -3,7 +3,7 @@ import img2 from "../IMG/Ellipse 4 (1).png";
 import img3 from "../IMG/verified.png";
 import img4 from "../IMG/Ellipse 4-1.png";
 import img5 from "../IMG/Thumbnail-9.png";
-import img6 from "../IMG/Ellipse 1 (4).png";
+import img6 from "../IMG/Ellipse 4 (2).png";
 import img7 from "../IMG/Thumbnail-10.png";
 import img8 from "../IMG/Ellipse 4 (3).png";
 import img9 from "../IMG/Thumbnail-11.png";
@@ -21,18 +21,74 @@ import img20 from "../IMG/Thumbnail-2.png";
 import img21 from "../IMG/Thumbnail-3.png";
 
 function App() {
+
+  const data1 = [
+    {id:2, img01:img1, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"Coke Studio Bangla", views:"1.5M views", time:"2 days ago", className:"cname27"},
+    {id:2, img01:img5, img:img6, tick:img3, dot:img4, title:"Infinix Note 12:Amoled Helio G88 SoC!", chname:"ATC Android ToTo Company", views:"4.2M views", time:"2 days ago", className:"cname2"},
+    {id:2, img01:img7, img:img8, tick:"", dot:img4, title:"MY first UX Design case study-this got me my first job.", chname:"Saptarshi Prakash", views:"4.8K views", time:"1 years ago", className:"cname23"},
+    {id:1, img01:img9, img:img10, tick:"", dot:"", title:"My Mix", chname:"Lopamundra Mitra, Anupam Roy, and more",cname:"thumb4", cname2:"mixbox1"},
+    {id:2, img01:img11, img:img12, tick:img3, dot:img4, title:"UX Design-What is it? (From AJ&Smart)", chname:"AJ&Smar", views:"150K views", time:"3 years ago", className:"cname24"},
+    {id:1, img01:img13, img:img10, title:"Mix-Mombati | Mohan Sharif | Dhakaiya Dose | Mahib Ahsan ft Anika", chname:"Mohan Sharif, Odd Signature, Shayan Chowdhury Arnob, and more",cname:"thumb4a", cname2:"mixbox2"},
+    {id:2, img01:img14, img:img15, tick:"", dot:img4, title:"| 48 VISA-FREE", chname:"Nadir On The Go", views:"1.7M views", time:"1 years ago", className:"cname25"},
+    {id:2, img01:img16, img:img17, tick:img3, dot:img4, title:"14 Advanced Tips to Design FASTER in Figma", chname:"Mizko", views:"53k views", time:"1 years ago", className:"cname26"},
+    {id:2, img01:img18, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"ATC Android ToTo Company", views:"1.5M views", time:"2 days ago", className:"cname2"},
+    {id:2, img01:img19, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"ATC Android ToTo Company", views:"1.5M views", time:"2 days ago", className:"cname2"},
+    {id:2, img01:img20, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"ATC Android ToTo Company", views:"1.5M views", time:"2 days ago", className:"cname2"},
+    {id:2, img01:img21, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"ATC Android ToTo Company", views:"1.5M views", time:"2 days ago", className:"cname2"},
+  ]
+
   return (
     <>
     <div id="main">
-        <div className="container">
+        {data1.map((i)=>(
+
+          i.id==2 ? (
+            <div className="container">
+              <div className="thumb">
+                <div><img src={i.img01} alt="" /></div>
+                <div className="vtitle">
+                    <div><img src={i.img} alt="" /></div>
+                    <div>{i.title}</div>
+                </div>
+                <div className="cname">
+                    <div className={i.className}>{i.chname}<img src={i.tick} alt="" height="40%"/>
+                    </div>
+                </div>
+                <div className="views">
+                  <div>{i.views}</div>
+                  <div>
+                    <img src={i.dot} style={{ height: '20%', paddingBottom: '28%' }} />
+                  </div>
+                  <div>{i.time}</div>
+
+                </div>
+            </div>
+          </div>
+        ): <div className="container">
+        <div className={i.cname}>
+            <div><img src={i.img01} alt="" /></div>
+            <div className={i.cname2}>
+                 <div><img src={i.img} alt="" /></div>
+            </div>
+            <div className="vtitle2">
+                <div>{i.title}</div>
+            </div>
+            <div className="cname1a" style={{ fontSize: '80%' }}>
+                <div className="cnamea" style={{ color: 'rgb(100, 100, 100)' }}>{i.chname}
+                </div>
+            </div>
+        </div>
+    </div>
+        ))}
+        {/* <div className="container">
             <div className="thumb">
                 <div><img src={img1} alt="" /></div>
                 <div className="vtitle">
                     <div><img src={img2} alt="" /></div>
-                    <div>Bulblui |Coke Studio Bangla |Season One |Ritu Raj X Nandita</div>
+                    <div>Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita</div>
                 </div>
                 <div className="cname" style={{fontSize: "80%"}}>
-                    <div className="cname2" style={{ color: 'rgb(100, 100, 100)' }}>ATC Android ToTo Company <img src={img3} alt="" height="40%" style={{ paddingTop: '3px', paddingLeft: '3px' }}/>
+                    <div className="cname27" style={{ color: 'rgb(100, 100, 100)' }}>Coke Studio Bangla <img src={img3} alt="" height="40%" style={{ paddingTop: '3px', paddingLeft: '3px' }}/>
                     </div>
                 </div>
                 <div className="views" style={{ fontSize: '80%' }}>
@@ -73,7 +129,7 @@ function App() {
                     <div>MY first UX Design case study-this got me my first job.</div>
                 </div>
                 <div className="cname" style={{ fontSize: '80%' }}>
-                    <div className="cname23" style={{ color: 'rgb(100, 100, 100)' }}>Saptarshi Prakash <img src={img3} alt="" height="40%" style={{ paddingTop: '3px', paddingLeft: '3px' }}/>
+                    <div className="cname23" style={{ color: 'rgb(100, 100, 100)' }}>Saptarshi Prakash 
                     </div>
                 </div>
                 <div className="views" style={{ fontSize: '80%' }}>
@@ -140,7 +196,7 @@ function App() {
                     <div>| 48 VISA-FREE</div>
                 </div>
                 <div className="cname" style={{ fontSize: '80%' }}>
-                    <div className="cname25" style={{ color: 'rgb(100, 100, 100)' }}>Nadir On The Go<img src={img3} alt="" height="40%" style={{ paddingTop: '3px', paddingLeft: '3px' }}/>
+                    <div className="cname25" style={{ color: 'rgb(100, 100, 100)' }}>Nadir On The Go
                     </div>
                 </div>
                 <div className="views" style={{ fontSize: '80%' }}>
@@ -173,7 +229,7 @@ function App() {
                 <div><img src={img18} alt="" /></div>
                 <div className="vtitle">
                     <div><img src={img2} alt="" /></div>
-                    <div>Bulblui |Coke Studio Bangla |Season One |Ritu Raj X Nandita</div>
+                    <div>Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita</div>
                 </div>
                 <div className="cname" style={{ fontSize: '80%' }}>
                     <div className="cname2" style={{ color: 'rgb(100, 100, 100)' }}>ATC Android ToTo Company <img src={img3} alt="" height="40%" style={{ paddingTop: '3px', paddingLeft: '3px' }}/>
@@ -191,7 +247,7 @@ function App() {
                 <div><img src={img19} alt="" /></div>
                 <div className="vtitle">
                     <div><img src={img2} alt="" /></div>
-                    <div>Bulblui |Coke Studio Bangla |Season One |Ritu Raj X Nandita</div>
+                    <div>Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita</div>
                 </div>
                 <div className="cname" style={{ fontSize: '80%' }}>
                     <div className="cname2" style={{ color: 'rgb(100, 100, 100)' }}>ATC Android ToTo Company <img src={img3} alt="" height="40%" style={{ paddingTop: '3px', paddingLeft: '3px' }}/>
@@ -209,7 +265,7 @@ function App() {
                 <div><img src={img20} alt="" /></div>
                 <div className="vtitle">
                     <div><img src={img2} alt="" /></div>
-                    <div>Bulblui |Coke Studio Bangla |Season One |Ritu Raj X Nandita</div>
+                    <div>Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita</div>
                 </div>
                 <div className="cname" style={{ fontSize: '80%' }}>
                     <div className="cname2" style={{ color: 'rgb(100, 100, 100)' }}>ATC Android ToTo Company <img src={img3} alt="" height="40%" style={{ paddingTop: '3px', paddingLeft: '3px' }}/>
@@ -227,7 +283,7 @@ function App() {
                 <div><img src={img21} alt="" /></div>
                 <div className="vtitle">
                     <div><img src={img2} alt="" /></div>
-                    <div>Bulblui |Coke Studio Bangla |Season One |Ritu Raj X Nandita</div>
+                    <div>Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita</div>
                 </div>
                 <div className="cname" style={{ fontSize: '80%' }}>
                     <div className="cname2" style={{ color: 'rgb(100, 100, 100)' }}>ATC Android ToTo Company <img src={img3} alt="" height="40%" style={{ paddingTop: '3px', paddingLeft: '3px' }}/>
@@ -239,7 +295,7 @@ function App() {
                     <div style={{ color: 'rgb(100, 100, 100)' }}>2 days ago</div>
                 </div>
             </div>
-        </div>
+        </div> */}
     </div>
     </>
   );
