@@ -15,7 +15,7 @@ function Navbar() {
       <div id="navbar">
       <div id="nav1" style={{ display: 'flex', alignItems: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <input type="text" placeholder="Search" style={{ backgroundColor: 'rgb(24, 24, 24)',fontSize: 'larger',width: '540px',height: '26px',}} />
+          <input type="text" placeholder="Search" style={{ backgroundColor: 'rgb(24, 24, 24)',fontSize: 'larger',width: '540px',height: '26px', paddingLeft: '10px'}} />
         </div>
         <div style={{width: '50px',backgroundColor: 'rgb(50, 50, 50)',height: '30px',display: 'flex',justifyContent: 'center',alignItems: 'center',}}>
           <img src={img1} alt="Search Icon" height="20px" width="19px" />
