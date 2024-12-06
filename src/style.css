@@ -57,6 +57,7 @@ body{
     justify-content: flex-end;
     position: fixed;
     right: 0px;
+    z-index: 5;
 }
 #nav1{
     display: flex;
@@ -93,6 +94,7 @@ input{
     border-top: 1px solid rgb(52, 52, 52);
     padding-bottom: 0.7%;
     padding-top: 0.7%;
+    z-index: 5;
 }
 
 #suggestion {
@@ -136,7 +138,6 @@ input{
     /* bottom: -210px; */
     font-size: 87%;
     padding-top: 9%;
-    z-index: -1;
 }
 
 #left > img{
@@ -170,33 +171,38 @@ input{
     color: rgb(100, 100, 100);
 }
 
-.cname2 >img{
+.cname> div >img{
     padding-top: 3px; padding-left: 3px;
 }
 
 .cname23{
     display: grid;
     grid-template-columns: 44% 10%;
+    color: rgb(100, 100, 100);
 }
 
 .cname24{
     display: grid;
     grid-template-columns: 23% 10%;
+    color: rgb(100, 100, 100);
 }
 
 .cname25{
     display: grid;
     grid-template-columns: 43% 10%;
+    color: rgb(100, 100, 100);
 }
 
 .cname26{
     display: grid;
     grid-template-columns: 15% 10%;
+    color: rgb(100, 100, 100);
 }
 
 .cname27{
     display: grid;
-    grid-template-columns: 30% 10%;
+    grid-template-columns: 49% 10%;
+    color: rgb(100, 100, 100);
 }
 
 .views{
@@ -209,6 +215,10 @@ input{
 
 .views >div{
     color: rgb(100, 100, 100);
+}
+
+.views >div >img{
+    padding-bottom: 28%
 }
 
 .thumb4{
