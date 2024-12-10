@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import img1 from "../IMG/Thumbnail-8.png";
 import img2 from "../IMG/Ellipse 4 (1).png";
 import img3 from "../IMG/verified.png";
@@ -21,21 +22,34 @@ import img20 from "../IMG/Thumbnail-2.png";
 import img21 from "../IMG/Thumbnail-3.png";
 
 function App() {
+    const [data1, setData1] = useState([]); 
 
-  const data1 = [
-    {id:2, img01:img1, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"Coke Studio Bangla", views:"1.5M views", time:"2 days ago", className:"cname27"},
-    {id:2, img01:img5, img:img6, tick:img3, dot:img4, title:"Infinix Note 12:Amoled Helio G88 SoC!", chname:"ATC Android ToTo Company", views:"4.2M views", time:"2 days ago", className:"cname2"},
-    {id:2, img01:img7, img:img8, tick:img3, dot:img4, title:"MY first UX Design case study-this got me my first job.", chname:"Saptarshi Prakash", views:"4.8K views", time:"1 years ago", className:"cname23"},
-    {id:1, img01:img9, img:img10, title:"My Mix", chname:"Lopamundra Mitra, Anupam Roy, and more",cname:"thumb4", cname2:"mixbox1"},
-    {id:2, img01:img11, img:img12, tick:img3, dot:img4, title:"UX Design-What is it? (From AJ&Smart)", chname:"AJ&Smar", views:"150K views", time:"3 years ago", className:"cname24"},
-    {id:1, img01:img13, img:img10, title:"Mix-Mombati | Mohan Sharif | Dhakaiya Dose | Mahib Ahsan ft Anika", chname:"Mohan Sharif, Odd Signature, Shayan Chowdhury Arnob, and more",cname:"thumb4a", cname2:"mixbox2"},
-    {id:2, img01:img14, img:img15, tick:img3, dot:img4, title:"| 48 VISA-FREE", chname:"Nadir On The Go", views:"1.7M views", time:"1 years ago", className:"cname25"},
-    {id:2, img01:img16, img:img17, tick:img3, dot:img4, title:"14 Advanced Tips to Design FASTER in Figma", chname:"Mizko", views:"53k views", time:"1 years ago", className:"cname26"},
-    {id:2, img01:img18, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"ATC Android ToTo Company", views:"1.5M views", time:"2 days ago", className:"cname2"},
-    {id:2, img01:img19, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"ATC Android ToTo Company", views:"1.5M views", time:"2 days ago", className:"cname2"},
-    {id:2, img01:img20, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"ATC Android ToTo Company", views:"1.5M views", time:"2 days ago", className:"cname2"},
-    {id:2, img01:img21, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"ATC Android ToTo Company", views:"1.5M views", time:"2 days ago", className:"cname2"},
-  ]
+  useEffect(() => {
+    fetch("http://localhost:3000/yt_videos") 
+      .then((response) => response.json())
+      .then((data) => {
+        setData1(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+
+//   const data1 = [
+//     {id:2, img01:img1, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"Coke Studio Bangla", views:"1.5M views", time:"2 days ago", className:"cname27"},
+//     {id:2, img01:img5, img:img6, tick:img3, dot:img4, title:"Infinix Note 12:Amoled Helio G88 SoC!", chname:"ATC Android ToTo Company", views:"4.2M views", time:"2 days ago", className:"cname2"},
+//     {id:2, img01:img7, img:img8, tick:img3, dot:img4, title:"MY first UX Design case study-this got me my first job.", chname:"Saptarshi Prakash", views:"4.8K views", time:"1 years ago", className:"cname23"},
+//     {id:1, img01:img9, img:img10, title:"My Mix", chname:"Lopamundra Mitra, Anupam Roy, and more",cname:"thumb4", cname2:"mixbox1"},
+//     {id:2, img01:img11, img:img12, tick:img3, dot:img4, title:"UX Design-What is it? (From AJ&Smart)", chname:"AJ&Smar", views:"150K views", time:"3 years ago", className:"cname24"},
+//     {id:1, img01:img13, img:img10, title:"Mix-Mombati | Mohan Sharif | Dhakaiya Dose | Mahib Ahsan ft Anika", chname:"Mohan Sharif, Odd Signature, Shayan Chowdhury Arnob, and more",cname:"thumb4a", cname2:"mixbox2"},
+//     {id:2, img01:img14, img:img15, tick:img3, dot:img4, title:"| 48 VISA-FREE", chname:"Nadir On The Go", views:"1.7M views", time:"1 years ago", className:"cname25"},
+//     {id:2, img01:img16, img:img17, tick:img3, dot:img4, title:"14 Advanced Tips to Design FASTER in Figma", chname:"Mizko", views:"53k views", time:"1 years ago", className:"cname26"},
+//     {id:2, img01:img18, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"ATC Android ToTo Company", views:"1.5M views", time:"2 days ago", className:"cname2"},
+//     {id:2, img01:img19, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"ATC Android ToTo Company", views:"1.5M views", time:"2 days ago", className:"cname2"},
+//     {id:2, img01:img20, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"ATC Android ToTo Company", views:"1.5M views", time:"2 days ago", className:"cname2"},
+//     {id:2, img01:img21, img:img2, tick:img3, dot:img4, title:"Bulbuli |Coke Studio Bangla |Season One |Ritu Raj X Nandita", chname:"ATC Android ToTo Company", views:"1.5M views", time:"2 days ago", className:"cname2"},
+//   ]
 
   return (
     <>
@@ -45,19 +59,19 @@ function App() {
           i.id==2 ? (
             <div className="container">
               <div className="thumb">
-                <div><img src={i.img01} alt="" /></div>
+                <div><img src={'http://localhost:3000' + i.img01} alt="" /></div>
                 <div className="vtitle">
-                    <div><img src={i.img} alt="" /></div>
+                    <div><img src={'http://localhost:3000' + i.img} alt="" /></div>
                     <div>{i.title}</div>
                 </div>
                 <div className="cname">
-                    <div className={i.className} >{i.chname}<img src={i.tick} alt="" height="40%"/>
+                    <div className={i.className} >{i.chname}<img src={'http://localhost:3000' + i.tick} alt="" height="40%"/>
                     </div>
                 </div>
                 <div className="views">
                   <div>{i.views}</div>
                   <div>
-                    <img src={i.dot} style={{ height: '20%', paddingBottom: '28%' }} />
+                    <img src={'http://localhost:3000' +i.dot} style={{ height: '20%', paddingBottom: '28%' }} />
                   </div>
                   <div>{i.time}</div>
 
@@ -66,9 +80,9 @@ function App() {
           </div>
         ): <div className="container">
         <div className={i.cname}>
-            <div><img src={i.img01} alt="" /></div>
+            <div><img src={'http://localhost:3000' + i.img01} alt="" /></div>
             <div className={i.cname2}>
-                 <div><img src={i.img} alt="" /></div>
+                 <div><img src={'http://localhost:3000' + i.img} alt="" /></div>
             </div>
             <div className="vtitle2">
                 <div>{i.title}</div>
