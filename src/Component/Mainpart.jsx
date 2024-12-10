@@ -21,11 +21,11 @@ import img19 from "../IMG/Thumbnail-1.png";
 import img20 from "../IMG/Thumbnail-2.png";
 import img21 from "../IMG/Thumbnail-3.png";
 
-function App() {
+function Mainpart() {
     const [data1, setData1] = useState([]); 
 
   useEffect(() => {
-    fetch("http://localhost:3000/yt_videos") 
+    fetch("https://ytapi-jozt.onrender.com/yt_videos") 
       .then((response) => response.json())
       .then((data) => {
         setData1(data);
@@ -59,19 +59,19 @@ function App() {
           i.id==2 ? (
             <div className="container">
               <div className="thumb">
-                <div><img src={'http://localhost:3000' + i.img01} alt="" /></div>
+                <div><img src={'https://ytapi-jozt.onrender.com' + i.img01} alt="" /></div>
                 <div className="vtitle">
-                    <div><img src={'http://localhost:3000' + i.img} alt="" /></div>
+                    <div><img src={'https://ytapi-jozt.onrender.com' + i.img} alt="" /></div>
                     <div>{i.title}</div>
                 </div>
                 <div className="cname">
-                    <div className={i.className} >{i.chname}<img src={'http://localhost:3000' + i.tick} alt="" height="40%"/>
+                    <div className={i.className} >{i.chname}<img src={'https://ytapi-jozt.onrender.com' + i.tick} alt="" height="40%"/>
                     </div>
                 </div>
                 <div className="views">
                   <div>{i.views}</div>
                   <div>
-                    <img src={'http://localhost:3000' +i.dot} style={{ height: '20%', paddingBottom: '28%' }} />
+                    <img src={'https://ytapi-jozt.onrender.com' +i.dot} style={{ height: '20%', paddingBottom: '28%' }} />
                   </div>
                   <div>{i.time}</div>
 
@@ -80,9 +80,9 @@ function App() {
           </div>
         ): <div className="container">
         <div className={i.cname}>
-            <div><img src={'http://localhost:3000' + i.img01} alt="" /></div>
+            <div><img src={'https://ytapi-jozt.onrender.com' + i.img01} alt="" /></div>
             <div className={i.cname2}>
-                 <div><img src={'http://localhost:3000' + i.img} alt="" /></div>
+                 <div><img src={'https://ytapi-jozt.onrender.com' + i.img} alt="" /></div>
             </div>
             <div className="vtitle2">
                 <div>{i.title}</div>
@@ -315,4 +315,4 @@ function App() {
   );
 }
 
-export default App;
+export default Mainpart;
