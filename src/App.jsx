@@ -1,19 +1,182 @@
-import Mainpart from './Component/Mainpart.jsx'
-import Navbar from './Component/Navbar.jsx'
-import Navbar1 from './Component/Navbar1.jsx'
-import Sidebar from './Component/Sidebar.jsx'
-import './style.css'
+import React, { useState, useEffect } from 'react';
+import Mainpart from './Component/Mainpart.jsx';
+import Navbar from './Component/Navbar.jsx';
+import Navbar1 from './Component/Navbar1.jsx';
+import Sidebar from './Component/Sidebar.jsx';
+import './style.css';
+import { MdHomeFilled } from "react-icons/md";
+import { FaFireAlt } from "react-icons/fa";
+import { IoMusicalNotesSharp } from "react-icons/io5";
+import { SiYoutubegaming } from "react-icons/si";
+import { IoSearchCircleOutline } from "react-icons/io5";
+
+
 
 function App() {
+  const [query, setQuery] = useState('');
+  const [videos, setVideos] = useState([]);
+  const [maxResults, setMaxResults] = useState(20);
+  const [nextPageToken, setNextPageToken] = useState(null); 
+  const [loading, setLoading] = useState(false);
+  const [currentFetch, setCurrentFetch] = useState('home');
+  const [sectionName, setSectionName] = useState({ icon: <MdHomeFilled />, name: 'Home' });
+  // const API_KEY = "AIzaSyD5Sk9COGpgwNC_kzieCMbbAmeLTcm9BQc";
+  const API_KEY = "AIzaSyB4FxQvMClJgQaJY5KzViAjflaUr88CfMU";
+  // const API_KEY = "AIzaSyBqHTQ0EcF01LmquuEtbGp5XyzUtj_NlkM"
+  // const API_KEY = "AIzaSyAP7nZ2H2S09N69q1-YLRGwFudmkpl42pc";
+
+  const fetchVideoDetails = async (items) => {
+    return await Promise.all(
+      items.map(async (video) => {
+        const videoId = video.id.videoId || video.id;
+        const channelId = video.snippet.channelId;
+
+        const videoUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id=${videoId}&key=${API_KEY}`;
+        const videoResponse = await fetch(videoUrl);
+        const videoData = await videoResponse.json();
+        const videoStats = videoData.items[0]?.statistics || {};
+        const publishedAt = videoData.items[0]?.snippet.publishedAt;
+
+        const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&id=${channelId}&key=${API_KEY}`;
+        const channelResponse = await fetch(channelUrl);
+        const channelData = await channelResponse.json();
+
+        const channelThumbnail = channelData.items[0]?.snippet.thumbnails.default.url || '';
+        const isVerified = channelData.items[0]?.statistics?.hiddenSubscriberCount === false;
+
+        return {
+          ...video,
+          viewCount: videoStats.viewCount || 0,
+          publishedAt,
+          channelThumbnail,
+          isVerified,
+        };
+      })
+    );
+  };
+
+  const fetchVideos = async (loadMore = false) => {
+    if (loading) return; 
+    setLoading(true);
+    
+    const searchQuery = query.trim(); 
+    const baseUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=${searchQuery}&regionCode=IN&type=video`;
+  
+    const url = `${baseUrl}${loadMore && nextPageToken ? `&pageToken=${nextPageToken}` : ''}&key=${API_KEY}`;
+  
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+  
+      if (data.error) {
+        console.error("Error from YouTube API:", data.error.message);
+      } else {
+        const videoDetails = await fetchVideoDetails(data.items);
+
+        setVideos((prevVideos) => loadMore ? [...prevVideos, ...videoDetails] : videoDetails);
+        
+        setNextPageToken(data.nextPageToken || null);
+      }
+    } catch (error) {
+      console.error("Error fetching videos:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
+  const fetchHomeVideos = (loadMore = false) => {
+    const homeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=technology&regionCode=IN&type=video&pageToken=${loadMore ? nextPageToken : ''}&key=${API_KEY}`;
+    fetchVideos(homeUrl, loadMore);
+    setCurrentFetch('home');
+    setSectionName({ icon: <MdHomeFilled />, name: 'Home' });
+  };
+
+  const fetchTrendingVideos = (loadMore = false) => {
+    const trendingUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=IN&maxResults=${maxResults}&pageToken=${loadMore ? nextPageToken : ''}&key=${API_KEY}`;
+    fetchVideos(trendingUrl, loadMore);
+    setCurrentFetch('trending');
+    setSectionName({ icon: <FaFireAlt />, name: 'Trending' });
+  };
+
+  const fetchGamingVideos = (loadMore = false) => {
+    const gamingUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=gaming&regionCode=IN&type=video&pageToken=${loadMore ? nextPageToken : ''}&key=${API_KEY}`;
+    fetchVideos(gamingUrl, loadMore);
+    setCurrentFetch('gaming');
+    setSectionName({ icon: <SiYoutubegaming />, name: 'Gaming' });
+  };
+
+  const fetchMusicVideos = (loadMore = false) => {
+    const musicUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=music&regionCode=IN&type=video&videoCategoryId=10&pageToken=${loadMore ? nextPageToken : ''}&key=${API_KEY}`;
+    fetchVideos(musicUrl, loadMore);
+    setCurrentFetch('music');
+    setSectionName({icon: <IoMusicalNotesSharp />, name: 'Music'});
+  };
+
+  const handleLoadMore = () => {
+    if (nextPageToken) {
+      switch (currentFetch) {
+        case 'home':
+          fetchHomeVideos(true);
+          break;
+        case 'trending':
+          fetchTrendingVideos(true);
+          break;
+        case 'gaming':
+          fetchGamingVideos(true);
+          break;
+        case 'music':
+          fetchMusicVideos(true);
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
+  const handleSectionSwitch = (section) => {
+    setVideos([]);
+    setNextPageToken(null); 
+    setLoading(false);
+
+    switch (section) {
+      case 'home':
+        fetchHomeVideos();
+        break;
+      case 'trending':
+        fetchTrendingVideos();
+        break;
+      case 'gaming':
+        fetchGamingVideos();
+        break;
+      case 'music':
+        fetchMusicVideos();
+        break;
+      case 'Search':
+        fetchVideos();
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    fetchHomeVideos();
+  }, []);
 
   return (
     <>
-      <Sidebar />
-      <Navbar />
+      <Sidebar
+        onTrendingClick={() => handleSectionSwitch('trending')}
+        onHomeClick={() => handleSectionSwitch('home')}
+        onGamingClick={() => handleSectionSwitch('gaming')}
+        onMusicClick={() => handleSectionSwitch('music')}
+      />
+      <Navbar query={query} setQuery={setQuery} fetchVideos={() => fetchVideos(false)} />
       <Navbar1 />
-      <Mainpart />
+      <Mainpart videos={videos} sectionName={sectionName} nextPageToken={nextPageToken} handleLoadMore={handleLoadMore} loading={loading}  />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

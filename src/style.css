@@ -36,6 +36,7 @@ body{
     padding-left: 10%;
     align-items:center;
     padding-top: 2%;
+    cursor: pointer;
 }
 .opt2{
     display: grid;
@@ -62,7 +63,7 @@ body{
 #nav1{
     display: flex;
     width: 55%;
-    padding-right: 14%;
+    padding-right: 1%;
     align-self: center;
 }
 input{
@@ -129,15 +130,14 @@ input{
 #main{
     display: grid;
     grid-template-columns: 26% 26% 26% 26%;
-    /* grid-template-rows: 25% 25%; */
     width: 80%;
     height: 85vh;
     position:sticky;
     top: 97px;
     left: 247px;
-    /* bottom: -210px; */
     font-size: 87%;
-    padding-top: 9%;
+    padding-top: 10%;
+    row-gap: 4%;
 }
 
 #left > img{
@@ -149,12 +149,38 @@ input{
     width: 21%;
     display: grid;
     grid-template-columns: 404%;
-    grid-template-rows: 60% 20% 6% 6%;
+    grid-template-rows: 75% 15% 6% 6%;
+}
+
+.thumbnail {
+    width: 100%; 
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+#videotitle{
+    height: 2.8em;
+    overflow: hidden;
+    display: -webkit-box;
+  -webkit-line-clamp: 2; /* Set the number of lines before the ellipsis */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
+
+#videotitle ::after{
+    content: '...';
+    background: white;
 }
 
 .vtitle{
     display: grid;
     grid-template-columns: 18% 85%;
+    /* overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Set the number of lines before the ellipsis */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
 }
 
 .cname{
@@ -163,55 +189,27 @@ input{
     grid-template-rows: 94%;
     padding-left: 18%;
     font-size: 80%;
+    
 }
 
 .cname2{
-    display: grid;
-    grid-template-columns: 70% 10%;
     color: rgb(100, 100, 100);
-}
-
-.cname> div >img{
-    padding-top: 3px; padding-left: 3px;
-}
-
-.cname23{
-    display: grid;
-    grid-template-columns: 44% 10%;
-    color: rgb(100, 100, 100);
-}
-
-.cname24{
-    display: grid;
-    grid-template-columns: 23% 10%;
-    color: rgb(100, 100, 100);
-}
-
-.cname25{
-    display: grid;
-    grid-template-columns: 43% 10%;
-    color: rgb(100, 100, 100);
-}
-
-.cname26{
-    display: grid;
-    grid-template-columns: 15% 10%;
-    color: rgb(100, 100, 100);
-}
-
-.cname27{
-    display: grid;
-    grid-template-columns: 49% 10%;
-    color: rgb(100, 100, 100);
+    font-size: 110%;
 }
 
 .views{
-    display: grid;
-    grid-template-columns: 31% 4% 36%;
-    grid-template-rows: 94%;
     padding-left: 18%;
-    font-size: 80%;
+    font-size: 90%;
 }
+
+input{
+    font-size: 90%;
+}
+
+input:focus {
+    outline: none;   /* Removes the outline (optional, if you don't want focus ring) */
+    border-color: lightblue;    /* Removes the border when the input is focused */
+  }
 
 .views >div{
     color: rgb(100, 100, 100);
@@ -274,3 +272,83 @@ input{
     grid-template-columns: 44% 86%;
     grid-template-rows: 38% 40%;
 }
+
+
+/* Additional styling for dropdown items */
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+  }
+  
+  .dropdown-item {
+    padding: 10px;
+    color: white;
+    font-size: 95%;
+    cursor: pointer;
+    color: red;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #333;
+  }
+  
+  select, select>option{
+    color: black;
+  }
+
+
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+  }
+  
+  /* Popup Content */
+  .popup-content {
+    position: relative;
+    background: #000;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.5);
+  }
+  
+  .popup-content iframe {
+    width: 600px;
+    height: 350px;
+    border-radius: 8px;
+  }
+  
+  /* Close Button */
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  /* AIzaSyD5Sk9COGpgwNC_kzieCMbbAmeLTcm9BQc */
+  .close-button:hover {
+    transform: scale(1.2);
+  }
+
+  #sectionname{
+    color: yellow;
+    /* padding-top: 1%; */
+    position: absolute;
+    top: 17.2%;
+    left: 18.5%;
+    font-size: 100%;
+  }
