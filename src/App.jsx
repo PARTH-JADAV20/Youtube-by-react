@@ -3,6 +3,7 @@ import Mainpart from './Component/Mainpart.jsx';
 import Navbar from './Component/Navbar.jsx';
 import Navbar1 from './Component/Navbar1.jsx';
 import Sidebar from './Component/Sidebar.jsx';
+import LoadingScreen from './Component/LoadingScreen.jsx'; 
 import './style.css';
 import { MdHomeFilled } from "react-icons/md";
 import { FaFireAlt } from "react-icons/fa";
@@ -18,12 +19,14 @@ function App() {
   const [maxResults, setMaxResults] = useState(20);
   const [nextPageToken, setNextPageToken] = useState(null); 
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [currentFetch, setCurrentFetch] = useState('home');
   const [sectionName, setSectionName] = useState({ icon: <MdHomeFilled />, name: 'Home' });
   // const API_KEY = "AIzaSyD5Sk9COGpgwNC_kzieCMbbAmeLTcm9BQc";
-  const API_KEY = "AIzaSyB4FxQvMClJgQaJY5KzViAjflaUr88CfMU";
+  // const API_KEY = "AIzaSyB4FxQvMClJgQaJY5KzViAjflaUr88CfMU";
   // const API_KEY = "AIzaSyBqHTQ0EcF01LmquuEtbGp5XyzUtj_NlkM"
   // const API_KEY = "AIzaSyAP7nZ2H2S09N69q1-YLRGwFudmkpl42pc";
+  const API_KEY = "AIzaSyCQGPdeGjcvZ39HVVL_ZVH1ULXBhVF2lj8";
 
   const fetchVideoDetails = async (items) => {
     return await Promise.all(
@@ -56,12 +59,16 @@ function App() {
   };
 
   const fetchVideos = async (loadMore = false) => {
-    if (loading) return; 
-    setLoading(true);
+    if (loading || loadingMore) return;
+    if (loadMore) {
+      setLoadingMore(true);
+    } else {
+      setLoading(true);
+    }
+    setSectionName({ icon: <IoSearchCircleOutline />, name: 'Search' });
     
-    const searchQuery = query.trim(); 
+    const searchQuery = query.trim(); // Get the current query from state
     const baseUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=${searchQuery}&regionCode=IN&type=video`;
-  
     const url = `${baseUrl}${loadMore && nextPageToken ? `&pageToken=${nextPageToken}` : ''}&key=${API_KEY}`;
   
     try {
@@ -72,46 +79,133 @@ function App() {
         console.error("Error from YouTube API:", data.error.message);
       } else {
         const videoDetails = await fetchVideoDetails(data.items);
-
-        setVideos((prevVideos) => loadMore ? [...prevVideos, ...videoDetails] : videoDetails);
-        
+        setVideos((prevVideos) => (loadMore ? [...prevVideos, ...videoDetails] : videoDetails));
         setNextPageToken(data.nextPageToken || null);
       }
     } catch (error) {
       console.error("Error fetching videos:", error);
     } finally {
-      setLoading(false);
+      if (loadMore) setLoadingMore(false);
+      else setLoading(false);
     }
   };
   
 
-  const fetchHomeVideos = (loadMore = false) => {
-    const homeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=technology&regionCode=IN&type=video&pageToken=${loadMore ? nextPageToken : ''}&key=${API_KEY}`;
-    fetchVideos(homeUrl, loadMore);
-    setCurrentFetch('home');
-    setSectionName({ icon: <MdHomeFilled />, name: 'Home' });
-  };
+  const fetchHomeVideos = async (loadMore = false) => {
+  if (loading || loadingMore) return;
+  if (loadMore) setLoadingMore(true);
+  else setLoading(true);
+  setSectionName({ icon: <MdHomeFilled />, name: 'Home' });
 
-  const fetchTrendingVideos = (loadMore = false) => {
-    const trendingUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=IN&maxResults=${maxResults}&pageToken=${loadMore ? nextPageToken : ''}&key=${API_KEY}`;
-    fetchVideos(trendingUrl, loadMore);
-    setCurrentFetch('trending');
-    setSectionName({ icon: <FaFireAlt />, name: 'Trending' });
-  };
+  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=technology&regionCode=IN&type=video${
+    loadMore && nextPageToken ? `&pageToken=${nextPageToken}` : ''
+  }&key=${API_KEY}`;
 
-  const fetchGamingVideos = (loadMore = false) => {
-    const gamingUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=gaming&regionCode=IN&type=video&pageToken=${loadMore ? nextPageToken : ''}&key=${API_KEY}`;
-    fetchVideos(gamingUrl, loadMore);
-    setCurrentFetch('gaming');
-    setSectionName({ icon: <SiYoutubegaming />, name: 'Gaming' });
-  };
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
 
-  const fetchMusicVideos = (loadMore = false) => {
-    const musicUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=music&regionCode=IN&type=video&videoCategoryId=10&pageToken=${loadMore ? nextPageToken : ''}&key=${API_KEY}`;
-    fetchVideos(musicUrl, loadMore);
-    setCurrentFetch('music');
-    setSectionName({icon: <IoMusicalNotesSharp />, name: 'Music'});
-  };
+    if (data.error) {
+      console.error("Error from YouTube API:", data.error.message);
+    } else {
+      const videoDetails = await fetchVideoDetails(data.items);
+      setVideos((prevVideos) => (loadMore ? [...prevVideos, ...videoDetails] : videoDetails));
+      setNextPageToken(data.nextPageToken || null);
+    }
+  } catch (error) {
+    console.error("Error fetching videos:", error);
+  } finally {
+    if (loadMore) setLoadingMore(false);
+    else setLoading(false);
+  }
+};
+
+const fetchTrendingVideos = async (loadMore = false) => {
+  if (loading || loadingMore) return;
+  if (loadMore) setLoadingMore(true);
+  else setLoading(true);
+  setSectionName({ icon: <FaFireAlt />, name: 'Trending' });
+
+  const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=IN&maxResults=${maxResults}${
+    loadMore && nextPageToken ? `&pageToken=${nextPageToken}` : ''
+  }&key=${API_KEY}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.error) {
+      console.error("Error from YouTube API:", data.error.message);
+    } else {
+      const videoDetails = await fetchVideoDetails(data.items);
+      setVideos((prevVideos) => (loadMore ? [...prevVideos, ...videoDetails] : videoDetails));
+      setNextPageToken(data.nextPageToken || null);
+    }
+  } catch (error) {
+    console.error("Error fetching videos:", error);
+  } finally {
+    if (loadMore) setLoadingMore(false);
+    else setLoading(false);
+  }
+};
+
+const fetchGamingVideos = async (loadMore = false) => {
+  if (loading || loadingMore) return;
+  if (loadMore) setLoadingMore(true);
+  else setLoading(true);
+  setSectionName({ icon: <SiYoutubegaming />, name: 'Gaming' });
+
+  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=gaming&regionCode=IN&type=video${
+    loadMore && nextPageToken ? `&pageToken=${nextPageToken}` : ''
+  }&key=${API_KEY}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.error) {
+      console.error("Error from YouTube API:", data.error.message);
+    } else {
+      const videoDetails = await fetchVideoDetails(data.items);
+      setVideos((prevVideos) => (loadMore ? [...prevVideos, ...videoDetails] : videoDetails));
+      setNextPageToken(data.nextPageToken || null);
+    }
+  } catch (error) {
+    console.error("Error fetching videos:", error);
+  } finally {
+    if (loadMore) setLoadingMore(false);
+    else setLoading(false);
+  }
+};
+
+const fetchMusicVideos = async (loadMore = false) => {
+  if (loading || loadingMore) return;
+  if (loadMore) setLoadingMore(true);
+  else setLoading(true);
+  setSectionName({ icon: <IoMusicalNotesSharp />, name: 'Music' });
+
+  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=music&regionCode=IN&type=video${
+    loadMore && nextPageToken ? `&pageToken=${nextPageToken}` : ''
+  }&key=${API_KEY}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.error) {
+      console.error("Error from YouTube API:", data.error.message);
+    } else {
+      const videoDetails = await fetchVideoDetails(data.items);
+      setVideos((prevVideos) => (loadMore ? [...prevVideos, ...videoDetails] : videoDetails));
+      setNextPageToken(data.nextPageToken || null);
+    }
+  } catch (error) {
+    console.error("Error fetching videos:", error);
+  } finally {
+    if (loadMore) setLoadingMore(false);
+    else setLoading(false);
+  }
+};
 
   const handleLoadMore = () => {
     if (nextPageToken) {
@@ -138,22 +232,27 @@ function App() {
     setVideos([]);
     setNextPageToken(null); 
     setLoading(false);
-
+  
     switch (section) {
       case 'home':
         fetchHomeVideos();
+        setCurrentFetch('home');
         break;
       case 'trending':
         fetchTrendingVideos();
+        setCurrentFetch('trending');
         break;
       case 'gaming':
         fetchGamingVideos();
+        setCurrentFetch('gaming');
         break;
       case 'music':
         fetchMusicVideos();
+        setCurrentFetch('music');
         break;
       case 'Search':
-        fetchVideos();
+        fetchVideos(false);
+        setCurrentFetch('search');
         break;
       default:
         break;
@@ -163,6 +262,10 @@ function App() {
   useEffect(() => {
     fetchHomeVideos();
   }, []);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>
