@@ -53,7 +53,7 @@ function Mainpart({ videos, sectionName, nextPageToken, handleLoadMore, loading 
 
   return (
     <>
-      <h2 id='sectionname'><span>{sectionName.icon}</span>&nbsp;{sectionName.name} Results</h2>
+      <h2 id='sectionname'><span>{sectionName.icon}</span>&nbsp;{sectionName.name} Videos</h2>
       <div id="main">
       
         {videos.map((video) => (

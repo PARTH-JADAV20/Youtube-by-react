@@ -24,9 +24,9 @@ function App() {
   const [sectionName, setSectionName] = useState({ icon: <MdHomeFilled />, name: 'Home' });
   // const API_KEY = "AIzaSyD5Sk9COGpgwNC_kzieCMbbAmeLTcm9BQc";
   // const API_KEY = "AIzaSyB4FxQvMClJgQaJY5KzViAjflaUr88CfMU";
-  // const API_KEY = "AIzaSyBqHTQ0EcF01LmquuEtbGp5XyzUtj_NlkM"
+  const API_KEY = "AIzaSyBqHTQ0EcF01LmquuEtbGp5XyzUtj_NlkM"
   // const API_KEY = "AIzaSyAP7nZ2H2S09N69q1-YLRGwFudmkpl42pc";
-  const API_KEY = "AIzaSyCQGPdeGjcvZ39HVVL_ZVH1ULXBhVF2lj8";
+  // const API_KEY = "AIzaSyCQGPdeGjcvZ39HVVL_ZVH1ULXBhVF2lj8";
 
   const fetchVideoDetails = async (items) => {
     return await Promise.all(
@@ -67,7 +67,7 @@ function App() {
     }
     setSectionName({ icon: <IoSearchCircleOutline />, name: 'Search' });
     
-    const searchQuery = query.trim(); // Get the current query from state
+    const searchQuery = query.trim(); 
     const baseUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=${searchQuery}&regionCode=IN&type=video`;
     const url = `${baseUrl}${loadMore && nextPageToken ? `&pageToken=${nextPageToken}` : ''}&key=${API_KEY}`;
   
