@@ -63,7 +63,7 @@ body{
 #nav1{
     display: flex;
     width: 55%;
-    padding-right: 1%;
+    padding-right: 10%;
     align-self: center;
 }
 input{
