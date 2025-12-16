@@ -22,11 +22,7 @@ function App() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [currentFetch, setCurrentFetch] = useState('home');
   const [sectionName, setSectionName] = useState({ icon: <MdHomeFilled />, name: 'Home' });
-  // const API_KEY = "AIzaSyD5Sk9COGpgwNC_kzieCMbbAmeLTcm9BQc";
-  // const API_KEY = "AIzaSyB4FxQvMClJgQaJY5KzViAjflaUr88CfMU";
-  const API_KEY = "AIzaSyBqHTQ0EcF01LmquuEtbGp5XyzUtj_NlkM"
-  // const API_KEY = "AIzaSyAP7nZ2H2S09N69q1-YLRGwFudmkpl42pc";
-  // const API_KEY = "AIzaSyCQGPdeGjcvZ39HVVL_ZVH1ULXBhVF2lj8";
+  const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
   const fetchVideoDetails = async (items) => {
     return await Promise.all(
